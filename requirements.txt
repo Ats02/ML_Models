@@ -1,4 +1,5 @@
-joblib
 streamlit
+joblib
 scikit-learn
-locale
+pandas
+numpy
