@@ -1,3 +1,4 @@
+
 import joblib
 import locale
 mnb = joblib.load('spam_model4.pkl')
@@ -33,7 +34,6 @@ def associates(user_item):
 
 
 import streamlit as st
-locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
 def app():   
     set_locale()
     with st.sidebar:
