@@ -1,5 +1,5 @@
-
 import joblib
+import locale
 mnb = joblib.load('spam_model4.pkl')
 pp = joblib.load('price_pred4.pkl')
 scale = joblib.load('scaler4.pkl')
@@ -11,6 +11,11 @@ def get_spam(user_inp):
     op = mnb.predict(data_count)
     return op
 
+def set_locale():
+    try:
+        locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
+    except locale.Error:
+        locale.setlocale(locale.LC_ALL, 'C') 
 
 def get_price(user_entry):
     user_entry=[user_entry]
@@ -18,7 +23,7 @@ def get_price(user_entry):
     model_pred = pp.predict(user_entry)
     return int(model_pred[0])
 
-import locale
+
 def format_number_with_locale(number):
   return locale.format_string('%d', number, grouping=True)
 
@@ -30,7 +35,7 @@ def associates(user_item):
 import streamlit as st
 locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
 def app():   
-    
+    set_locale()
     with st.sidebar:
         st.header("Stuff")
         application = st.selectbox("ML Model:",["Spam Classification","House Price Prediction",'Association Rules','Text_Autocomplete'])
@@ -113,6 +118,3 @@ def app():
 
 if __name__ == "__main__":
     app()
-    res = get_price( [5000,3,3,2,1,0,0,1,1,2,0,2])
-    print("Res:: ")
-
