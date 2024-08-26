@@ -1,4 +1,4 @@
 joblib
 streamlit
 scikit-learn
-locale
+pip install locale
