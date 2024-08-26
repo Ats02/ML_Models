@@ -1,4 +1,3 @@
-
 import joblib
 import locale
 mnb = joblib.load('spam_model4.pkl')
@@ -31,11 +30,19 @@ def format_number_with_locale(number):
 def associates(user_item):
     return association[ association['antecedents']=={user_item}]['consequents']
 
-
+from streamlit_extras.let_it_rain import rain
+def it_rains():
+    rain(
+        emoji="👷",
+        font_size=54,
+        falling_speed=5,
+        animation_length="infinite",
+    )
 
 import streamlit as st
 def app():   
     set_locale()
+    st.header("Welcome to Atharva's ML Models")
     with st.sidebar:
         st.header("Stuff")
         application = st.selectbox("ML Model:",["Spam Classification","House Price Prediction",'Association Rules','Text_Autocomplete'])
@@ -109,12 +116,25 @@ def app():
             formatted_prediction = format_number_with_locale(prediction)
             st.success(f"₹{formatted_prediction}/-")
     elif application=="Association Rules":
-        ui =st.text_input("Enter the item:")
-        asso = associates(ui)
-        for key, value in asso.items():
-            consequent_list = list(value) 
-            consequent_string = ", ".join(consequent_list)
-            st.write(f"{consequent_string}")
-
+        st.title("Finding Association Rules")
+        ui =st.radio(
+            "Select Items",
+            ["burgers","cake",'chocolate','eggs','french fries','milk','pancakes','spaghetti']
+        )
+        if st.button('Find Association'):
+            st.info(f"Your {ui} could be best sold with:")
+            asso = associates(ui)
+            for key, value in asso.items():
+                consequent_list = list(value) 
+                consequent_string = ", ".join(consequent_list)
+                st.write(f"{consequent_string}")
+    elif application=="Text_Autocomplete":
+        st.title('Text_Autocompletion')
+        st.info('Application in development')
+        it_rains()
+        with st.spinner('Required Time->soon'):
+            import time
+            time.sleep(10)
+            st.info('Still Work in Progress')
 if __name__ == "__main__":
     app()
