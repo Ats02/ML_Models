@@ -1,5 +1,4 @@
 import joblib
-import locale
 mnb = joblib.load('spam_model4.pkl')
 pp = joblib.load('price_pred4.pkl')
 scale = joblib.load('scaler4.pkl')
@@ -40,7 +39,6 @@ def it_rains():
 
 import streamlit as st
 def app():   
-    set_locale()
     st.header("Welcome to Atharva's ML Models")
     with st.sidebar:
         st.header("Stuff")
