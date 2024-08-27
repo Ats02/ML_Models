@@ -11,12 +11,8 @@ def get_spam(user_inp):
     return op
 
 def format_number(number):
-    number_str = str(number)
-    number_str = number_str[::-1] 
-    number_str = ','.join([number_str[i:i+2] for i in range(0, len(number_str), 2)])
-    number_str = number_str[::-1] 
-    number_str = ','.join([number_str[i:i+3] for i in range(0, len(number_str), 3)])
-    return number_str
+    formatted_number = "{:,}".format(number)
+    return formatted_number
 
 def get_price(user_entry):
     user_entry=[user_entry]
@@ -116,7 +112,7 @@ def app():
     elif application=="Association Rules":
         st.title("Finding Association Rules")
         ui =st.radio(
-            "Select Items",
+            "Select an Item and predict results",
             ["burgers","cake",'chocolate','eggs','french fries','milk','pancakes','spaghetti']
         )
         if st.button('Find Association'):
@@ -130,9 +126,6 @@ def app():
         st.title('Text_Autocompletion')
         st.info('Application in development')
         it_rains()
-        with st.spinner('Required Time->soon'):
-            import time
-            time.sleep(10)
-            st.info('Still Work in Progress')
+        st.markdown('Still Work in Progress')
 if __name__ == "__main__":
     app()
