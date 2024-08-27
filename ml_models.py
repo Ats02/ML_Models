@@ -11,11 +11,13 @@ def get_spam(user_inp):
     op = mnb.predict(data_count)
     return op
 
-def set_locale():
-    try:
-        locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
-    except locale.Error:
-        locale.setlocale(locale.LC_ALL, 'C') 
+def format_number(number):
+    number_str = str(number)
+    number_str = number_str[::-1] 
+    number_str = ','.join([number_str[i:i+2] for i in range(0, len(number_str), 2)])
+    number_str = number_str[::-1] 
+    number_str = ','.join([number_str[i:i+3] for i in range(0, len(number_str), 3)])
+    return number_str
 
 def get_price(user_entry):
     user_entry=[user_entry]
@@ -23,9 +25,6 @@ def get_price(user_entry):
     model_pred = pp.predict(user_entry)
     return int(model_pred[0])
 
-
-def format_number_with_locale(number):
-  return locale.format_string('%d', number, grouping=True)
 
 def associates(user_item):
     return association[ association['antecedents']=={user_item}]['consequents']
@@ -113,8 +112,9 @@ def app():
         user_inp = [area,bedrooms,bathrooms,stories,mainroad,guestroom,basement,hotwater,aircond,parking,preface,furnishing]
         if st.button("Predict Price"):
             prediction = get_price(user_inp)
-            formatted_prediction = format_number_with_locale(prediction)
+            formatted_prediction = format_number(prediction)
             st.success(f"₹{formatted_prediction}/-")
+            
     elif application=="Association Rules":
         st.title("Finding Association Rules")
         ui =st.radio(
